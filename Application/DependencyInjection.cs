@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CodingExercise.Application.Common.Behaviours;
 using CodingExercise.Application.Common.Mappings;
 using FluentValidation;
 using MediatR;
@@ -15,6 +16,7 @@ namespace CleanApplication.Application
                                Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             return services;
         }

@@ -6,6 +6,10 @@ namespace CodingExercise.Application.Album.Queries.GetSettingById
 {
     public class GetAlbumByUserIdQuery : IRequestWrapper<IEnumerable<AlbumDto>>
     {
-        public int UserId { get; set; }
+        public GetAlbumByUserIdQuery(int userId)
+        {
+            UserId = userId;
+        }
+        public int UserId { get; private set; }
     }
 }

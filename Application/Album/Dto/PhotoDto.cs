@@ -7,10 +7,9 @@ namespace CodingExercise.Application.Album.Dto
 {
     public class PhotoDto : IMapFrom <Photo>
     {
-        public int AlbumId { get; set; }
         public int Id { get; set; }
         public string Title { get; set; }
-        public Uri? Url { get; set; }
+        public Uri Url { get; set; }
         public string ThumbnailUrl { get; set; }
 
         public void Mapping(Profile profile)
