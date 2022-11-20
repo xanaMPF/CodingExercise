@@ -8,8 +8,7 @@ Possible Improvements
 - Add authentication to the controllers (increase security)
 
 Notes about the solution
-- Add swagger for your convenience
-- Use CQRS to segregate Command and Query Responsabilities
+- Added swagger for your convenience
 
 
 
