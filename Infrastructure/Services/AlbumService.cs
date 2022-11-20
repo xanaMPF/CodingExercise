@@ -24,7 +24,7 @@ namespace Infrastructure.Services
             albumsTask = _placeholderClient.GetAlbums();
             photosTask = _placeholderClient.GetPhotos();
 
-            Task.WaitAll(albumsTask, photosTask);
+            await Task.WhenAll(albumsTask, photosTask);
 
             foreach (var album in albumsTask.Result)
             {
