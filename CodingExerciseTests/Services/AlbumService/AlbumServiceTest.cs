@@ -22,7 +22,7 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
         public static AlbumExtended extended_album2_2Photos = new AlbumExtended(album_2, new List<Photo> { photo_200_album_2, photo_201_album_2 });
         public static AlbumExtended extended_album1_noPhotos = new AlbumExtended(album_1, new List<Photo> { });
 
-        public static IEnumerable<object[]> AlbunsPhotosValidTestData () => new List<object[]>
+        public static IEnumerable<object[]> AlbumsPhotosValidTestData () => new List<object[]>
         {
             new object[] { 
                 new List<Album> { album_1 },
@@ -36,7 +36,7 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
             },
         };
 
-        public static IEnumerable<object[]> AlbunsNoPhotosValidTestData() => new List<object[]>
+        public static IEnumerable<object[]> AlbumsNoPhotosValidTestData() => new List<object[]>
         {
             new object[] {
                 new List<Album> { album_1 },
@@ -65,17 +65,19 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
             var albumService = new AlbumService(partyServiceMock.Object);
             var result = await albumService.GetAllAsync();
             var expected = new List<AlbumExtended>();
+
             Assert.Equal(expected, result);
         }
 
         [Fact(DisplayName = "GetAllAsync Throws dedicated exception if Album API fails with exception")]
-        public async Task GetAllAsync_AlbunsApiFails_ThrowsException()
+        public async Task GetAllAsync_AlbumsApiFails_ThrowsException()
         {
             var partyServiceMock = new Mock<IAlbumRecordApiClient>();
             partyServiceMock.Setup(m => m.GetAlbums()).Throws(() => new AlbumRecordsException());
             partyServiceMock.Setup(m => m.GetPhotos()).ReturnsAsync(() => new List<Photo>());
 
             var albumService = new AlbumService(partyServiceMock.Object);
+
             await Assert.ThrowsAsync<AlbumRecordsException>(() => albumService.GetAllAsync());
         }
 
@@ -87,12 +89,13 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
             partyServiceMock.Setup(m => m.GetPhotos()).Throws(() => new PhotoRecordsException());
 
             var albumService = new AlbumService(partyServiceMock.Object);
+
             await Assert.ThrowsAsync<PhotoRecordsException>(() => albumService.GetAllAsync());
         }
 
         [Theory(DisplayName = "GetAllAsync Returns valid objects if Album/Photo Api returns valid objects ")]
-        [MemberData(nameof(AlbunsPhotosValidTestData))]
-        public async Task GetAllAsync_ExpectedAlbunsPhotos_ReturnsValidAlbuns(List<Album> albums, List<Photo> photos, List<AlbumExtended> albumsExtended)
+        [MemberData(nameof(AlbumsPhotosValidTestData))]
+        public async Task GetAllAsync_ExpectedAlbumsPhotos_ReturnsValidAlbums(List<Album> albums, List<Photo> photos, List<AlbumExtended> albumsExtended)
         {
             var partyServiceMock = new Mock<IAlbumRecordApiClient>();
             partyServiceMock.Setup(m => m.GetAlbums()).ReturnsAsync(() => albums);
@@ -100,12 +103,13 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
 
             var albumService = new AlbumService(partyServiceMock.Object);
             var result = await albumService.GetAllAsync();
+
             albumsExtended.Should().BeEquivalentTo(result);
         }
 
-        [Theory(DisplayName = "GetAllAsync Returns albuns with empty photo list with Photo Api doesnt return photos for the albuns")]
-        [MemberData(nameof(AlbunsNoPhotosValidTestData))]
-        public async Task GetAllAsync_ExpectedAlbunsWithNoPhotos_ReturnsValidAlbunsWithNoPhotos(List<Album> albums, List<Photo> photos, List<AlbumExtended> albumsExtended)
+        [Theory(DisplayName = "GetAllAsync Returns albums with empty photo list with Photo Api doesnt return photos for the albums")]
+        [MemberData(nameof(AlbumsNoPhotosValidTestData))]
+        public async Task GetAllAsync_ExpectedAlbumsWithNoPhotos_ReturnsValidAlbumsWithNoPhotos(List<Album> albums, List<Photo> photos, List<AlbumExtended> albumsExtended)
         {
             var partyServiceMock = new Mock<IAlbumRecordApiClient>();
             partyServiceMock.Setup(m => m.GetAlbums()).ReturnsAsync(() => albums);
@@ -113,6 +117,7 @@ namespace CodingExerciseTests.Services.AlbumServiceTest
 
             var albumService = new AlbumService(partyServiceMock.Object);
             var result = await albumService.GetAllAsync();
+
             albumsExtended.Should().BeEquivalentTo(result);
         }
 

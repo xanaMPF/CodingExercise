@@ -39,7 +39,7 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
         public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryInValidNegative = new GetAlbumsByUserIdQuery(-2);
         public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryInValidZero = new GetAlbumsByUserIdQuery(0);
 
-        public static IEnumerable<object[]> AlbunsPhotosUser10ValidTestData() => new List<object[]>
+        public static IEnumerable<object[]> AlbumsPhotosUser10ValidTestData() => new List<object[]>
         {
             new object[] {
                 new List<AlbumDto> { albumDto_1, },
@@ -51,7 +51,7 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
             }
         };
 
-        public static IEnumerable<object[]> AlbunsPhotosNoUser10ValidTestData() => new List<object[]>
+        public static IEnumerable<object[]> AlbumsPhotosNoUser10ValidTestData() => new List<object[]>
         {
             new object[] {
                 new List<AlbumDto> { },
@@ -75,8 +75,8 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
         }
 
         [Theory(DisplayName = "Handle Returns valid objects for specific user if there are Albums for that user")]
-        [MemberData(nameof(AlbunsPhotosUser10ValidTestData))]
-        public async Task Handle_ReturnsAlbunsForUser_WhenServiceReturnsValidAlbunsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
+        [MemberData(nameof(AlbumsPhotosUser10ValidTestData))]
+        public async Task Handle_ReturnsAlbumsForUser_WhenServiceReturnsValidAlbumsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
         {
             var albumServiceMock = new Mock<IAlbumService>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
@@ -90,8 +90,8 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
         }
 
         [Theory(DisplayName = "Handle Returns empty if Album service does not return objects for that user")]
-        [MemberData(nameof(AlbunsPhotosNoUser10ValidTestData))]
-        public async Task Handle_ReturnsNoAlbunsForUser_WhenServiceDoesNotReturnsValidAlbunsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
+        [MemberData(nameof(AlbumsPhotosNoUser10ValidTestData))]
+        public async Task Handle_ReturnsNoAlbumsForUser_WhenServiceDoesNotReturnsValidAlbumsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
         {
             var albumServiceMock = new Mock<IAlbumService>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());

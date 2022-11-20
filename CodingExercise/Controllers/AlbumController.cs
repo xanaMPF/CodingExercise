@@ -12,11 +12,7 @@ namespace CodingExercise.Controllers
     [Produces("application/json")]
     [Route("[controller]")]
     public class AlbumController : ApiControllerBase
-    {
-        public AlbumController()
-        {
-        }
-
+    {       
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<AlbumDto>), StatusCodes.Status200OK)]

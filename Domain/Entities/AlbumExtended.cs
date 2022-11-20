@@ -4,9 +4,6 @@ namespace Domain.Entities
 {
     public class AlbumExtended : Album
     {
-        public AlbumExtended()
-        { }
-
         public AlbumExtended(Album album, IEnumerable<Photo> photos)
         {
             Id = album.Id;

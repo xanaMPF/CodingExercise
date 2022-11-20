@@ -17,7 +17,7 @@ namespace Infrastructure.Services
 
         public async Task<IEnumerable<AlbumExtended>> GetAllAsync()
         {
-            List<AlbumExtended> albuns = new List<AlbumExtended>();
+            List<AlbumExtended> albums = new List<AlbumExtended>();
             Task<IEnumerable<Album>> albumsTask;
             Task<IEnumerable<Photo>> photosTask;
 
@@ -30,10 +30,10 @@ namespace Infrastructure.Services
             {
                 var photosOfAlbum = photosTask.Result?.Where(photo => photo.AlbumId == album.Id);
                 var extendedAlbum = new AlbumExtended(album, photosOfAlbum);
-                albuns.Add(extendedAlbum);
+                albums.Add(extendedAlbum);
             }
 
-            return albuns;
+            return albums;
         }
     }
 }

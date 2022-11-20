@@ -34,7 +34,7 @@ namespace CodingExerciseTests.Queries.GetAlbums
 
         public static GetAlbumsQuery getAlbumsQuery = new GetAlbumsQuery();
 
-        public static IEnumerable<object[]> AlbunsPhotosValidTestData() => new List<object[]>
+        public static IEnumerable<object[]> AlbumsPhotosValidTestData() => new List<object[]>
         {
             new object[] {
                 new List<AlbumDto> { albumDto_1, },
@@ -62,8 +62,8 @@ namespace CodingExerciseTests.Queries.GetAlbums
         }
 
         [Theory(DisplayName = "Handle Returns valid objects if Album service returns valid objects ")]
-        [MemberData(nameof(AlbunsPhotosValidTestData))]
-        public async Task GetAllAsync_ExpectedAlbunsPhotos_ReturnsValidAlbuns(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
+        [MemberData(nameof(AlbumsPhotosValidTestData))]
+        public async Task Handle_ExpectedAlbumsPhotos_ReturnsValidAlbums(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
         {
             var albumServiceMock = new Mock<IAlbumService>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());

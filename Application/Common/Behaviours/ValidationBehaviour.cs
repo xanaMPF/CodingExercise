@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
-using ValidationException = CodingExercise.Application.Common.Exceptions.ValidationException;
 
 namespace CodingExercise.Application.Common.Behaviours
 {
@@ -28,7 +28,22 @@ namespace CodingExercise.Application.Common.Behaviours
                 var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
                 if (failures.Count != 0)
-                    throw new ValidationException(failures);
+                {
+                    var failureGroups = failures
+                        .GroupBy(e => e.PropertyName, e => e.ErrorMessage);
+                    var validationFailures = new List<ValidationFailure>();
+
+                    foreach (var failureGroup in failureGroups)
+                    {
+                        var propertyName = failureGroup.Key;
+                        var propertyFailures = failureGroup.ToArray();
+
+                        validationFailures.Add(new ValidationFailure(propertyName, string.Concat(propertyFailures)));
+                    }
+
+                    throw new ValidationException(validationFailures);
+
+                }
             }
             return await next();
         }

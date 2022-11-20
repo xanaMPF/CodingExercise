@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using CodingExercise.Application.Common.Mappings;
+using Domain.Entities;
 using System.Collections.Generic;
 
 namespace CodingExercise.Application.Album.Dto
 {
-    public class AlbumDto : IMapFrom<Domain.Entities.AlbumExtended>
+    public class AlbumDto : IMapFrom<AlbumExtended>
     {
         public int UserId { get; set; }
         public int Id { get; set; }
@@ -14,7 +15,7 @@ namespace CodingExercise.Application.Album.Dto
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Entities.AlbumExtended, AlbumDto>();
+            profile.CreateMap<AlbumExtended, AlbumDto>();
         }
     }
 }

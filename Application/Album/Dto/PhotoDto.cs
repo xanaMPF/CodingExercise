@@ -14,7 +14,7 @@ namespace CodingExercise.Application.Album.Dto
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Entities.Photo, PhotoDto>();
+            profile.CreateMap<Photo, PhotoDto>();
         }
     }
 }

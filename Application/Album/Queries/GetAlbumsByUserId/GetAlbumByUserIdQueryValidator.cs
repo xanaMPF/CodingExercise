@@ -1,7 +1,6 @@
-﻿using CodingExercise.Application.Album.Queries.GetAlbumsByUserId;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace CodingExercise.Application.Album.Queries.GetSettingById
+namespace CodingExercise.Application.Album.Queries.GetAlbumsByUserId
 {
     public class GetAlbumByUserIdQueryValidator : AbstractValidator<GetAlbumsByUserIdQuery>
     {
@@ -10,7 +9,6 @@ namespace CodingExercise.Application.Album.Queries.GetSettingById
         {
             RuleFor(x => x.UserId)
                 .NotNull()
-                .NotEmpty()
                 .GreaterThan(0)
                 .WithMessage(USER_NOT_VALID_MESSAGE);
 
