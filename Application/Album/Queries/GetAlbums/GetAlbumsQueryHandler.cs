@@ -23,9 +23,9 @@ namespace CodingExercise.Application.Album.Queries.GetAlbums
         {   
             _ = request ?? throw new ArgumentNullException(nameof(request));
 
-            var albuns = await _albumService.GetAllAsync();
+            var albums = await _albumService.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<AlbumDto>>(albuns);
+            return _mapper.Map<IEnumerable<AlbumDto>>(albums);
         }
     }
 }

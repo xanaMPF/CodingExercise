@@ -3,8 +3,6 @@ using CodingExercise.Application.Album.Queries.GetAlbums;
 using CodingExercise.Application.Album.Queries.GetAlbumsByUserId;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,12 +13,8 @@ namespace CodingExercise.Controllers
     [Route("[controller]")]
     public class AlbumController : ApiControllerBase
     {
-
-        private readonly ILogger<AlbumController> _logger;
-
-        public AlbumController(ILogger<AlbumController> logger)
+        public AlbumController()
         {
-            _logger = logger ?? throw new ArgumentException(nameof(logger));
         }
 
 

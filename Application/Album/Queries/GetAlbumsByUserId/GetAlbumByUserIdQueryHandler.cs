@@ -24,9 +24,9 @@ namespace CodingExercise.Application.Album.Queries.GetAlbumsByUserId
         {
             _ = request ?? throw new ArgumentNullException(nameof(request));
 
-            var albuns = await _albumService.GetAllAsync();
-            var albunsByUser = albuns.Where(albuns => albuns.UserId == request.UserId);
-            return _mapper.Map<IEnumerable<AlbumDto>>(albunsByUser);
+            var albums = await _albumService.GetAllAsync();
+            var albumsByUser = albums.Where(album => album.UserId == request.UserId);
+            return _mapper.Map<IEnumerable<AlbumDto>>(albumsByUser);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CodingExercise.Application.Common.Exceptions;
-using CodingExercise.Application.Common.Interfaces;
+﻿using CodingExercise.Application.Common.Interfaces;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
