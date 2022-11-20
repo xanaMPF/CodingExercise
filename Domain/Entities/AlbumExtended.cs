@@ -12,7 +12,7 @@ namespace Domain.Entities
             Id = album.Id;
             Title = album.Title;
             UserId = album.UserId;
-            Photos = photos;
+            Photos = photos ?? new List<Photo>();
         }
 
         public IEnumerable<Photo> Photos { get; private set; }

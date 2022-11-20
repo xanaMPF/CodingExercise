@@ -2,11 +2,11 @@
 using CodingExercise.Application.Common.Interfaces;
 using System.Collections.Generic;
 
-namespace CodingExercise.Application.Album.Queries.GetSettingById
+namespace CodingExercise.Application.Album.Queries.GetAlbumsByUserId
 {
-    public class GetAlbumByUserIdQuery : IRequestWrapper<IEnumerable<AlbumDto>>
+    public class GetAlbumsByUserIdQuery : IRequestWrapper<IEnumerable<AlbumDto>>
     {
-        public GetAlbumByUserIdQuery(int userId)
+        public GetAlbumsByUserIdQuery(int userId)
         {
             UserId = userId;
         }

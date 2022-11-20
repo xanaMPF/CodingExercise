@@ -1,7 +1,6 @@
 ﻿using CodingExercise.Application.Album.Dto;
-using CodingExercise.Application.Album.Queries.GetAlbum;
-using CodingExercise.Application.Album.Queries.GetSettingById;
-using MediatR;
+using CodingExercise.Application.Album.Queries.GetAlbums;
+using CodingExercise.Application.Album.Queries.GetAlbumsByUserId;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -26,20 +25,19 @@ namespace CodingExercise.Controllers
 
 
         [HttpGet]
-
         [ProducesResponseType(typeof(IEnumerable<AlbumDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<AlbumDto>>> Get()
         {
-            return Ok(await Mediator.Send(new GetAlbumQuery()));
+            return Ok(await Mediator.Send(new GetAlbumsQuery()));
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("byUser/{userId}")]
         [ProducesResponseType(typeof(IEnumerable<AlbumDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<AlbumDto>>> GetByUserId(int userId)
         {
-            return Ok(await Mediator.Send(new GetAlbumByUserIdQuery(userId)));
+            return Ok(await Mediator.Send(new GetAlbumsByUserIdQuery(userId)));
         }
     }
 }

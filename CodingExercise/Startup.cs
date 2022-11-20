@@ -1,6 +1,5 @@
 using CleanApplication.Application;
 using CodingExercise.Application.Common.Interfaces;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +32,7 @@ namespace CodingExercise
                 return configurationBuilder.Build();
             });
             services
-                .AddRefitClient<IPlaceholderClient>()
+                .AddRefitClient<IAlbumsClient>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://jsonplaceholder.typicode.com"));
 
             services.AddApplication();
