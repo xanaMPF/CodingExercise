@@ -11,6 +11,7 @@ Possible improvements
 - Add authentication to the controllers (increase security)
 
 - Use the Collections as querystring parameters
+- ```https://jsonplaceholder.typicode.com/photos?albumId=1&albumId=2```
 
   * When calling the endpoint to get the photos, it is possible to get the photos for a specific list of albums. This may not be considered an improvement on all levels, as it comes with some tradeoffs.
 
