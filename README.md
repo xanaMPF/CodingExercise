@@ -16,7 +16,7 @@ Possible improvements
 
   * Call all the photos: Advantage: It can be done in an async way, calling two endpoints at the same time. Disavantage:  requires more memory as we load all the photos and we use more bandwith
 
-  * Call the photos only for the albums that we need: Advantage: We load less photos into memory. Disavantage: The calls to the endpointwould haveed to be done in a sync way as we need the list of the albums to build the queryString parameter. If we have many albums, we may reach the limit of the http request (2045 characters).
+  * Call the photos only for the albums that we need: Advantage: We load fewer photos into memory. Disavantage: The calls to the endpoint would have to be done in a sync way as we need the list of the albums to build the queryString parameter. If we have many albums, we may reach the limit of the http request (2045 characters).
 
 Notes about the solution
 
