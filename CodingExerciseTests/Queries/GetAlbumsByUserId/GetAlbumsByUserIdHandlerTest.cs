@@ -25,29 +25,34 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
 
         public static AlbumExtended extended_album1_1Photo = new AlbumExtended(album_1, new List<Photo> { photo_100_album_1, photo_200_album_2 });
         public static AlbumExtended extended_album2_2Photos = new AlbumExtended(album_2, new List<Photo> { photo_200_album_2, photo_201_album_2 });
+        public static AlbumExtended extended_album2_1Photos = new AlbumExtended(album_2, new List<Photo> { photo_200_album_2 });
 
         public static AlbumExtended extended_album1_noPhotos = new AlbumExtended(album_1, new List<Photo> { });
 
-        public static PhotoDto photoDto = new PhotoDto { Id = 100, Title = "Photo100" };
-        public static PhotoDto photo2Dto = new PhotoDto { Id = 200, Title = "Photo200" };
+        public static PhotoDto photo100Dto = new PhotoDto { Id = 100, Title = "Photo100" };
+        public static PhotoDto photo200Dto = new PhotoDto { Id = 200, Title = "Photo200" };
+        public static PhotoDto photo201Dto = new PhotoDto { Id = 201, Title = "Photo201" };
 
-        public static AlbumDto albumDto_1 = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> { photoDto, photo2Dto } };
-        public static AlbumDto albumDto_1_NoPhotos = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> { } };
-        public static AlbumDto albumDto_2 = new AlbumDto() { Id = 2, Title = "Title2", UserId = 20, Photos = new List<PhotoDto> { photoDto } };
+        public static AlbumDto albumDto_1_2Photos = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> { photo100Dto, photo200Dto } };
+        public static AlbumDto albumDto_1_0Photos = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> {} };
+
+        public static AlbumDto albumDto_2 = new AlbumDto() { Id = 2, Title = "Title2", UserId = 20, Photos = new List<PhotoDto> { photo200Dto, photo201Dto } };
 
         public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryValid = new GetAlbumsByUserIdQuery(10);
-        public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryInValidNegative = new GetAlbumsByUserIdQuery(-2);
-        public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryInValidZero = new GetAlbumsByUserIdQuery(0);
 
         public static IEnumerable<object[]> AlbumsPhotosUser10ValidTestData() => new List<object[]>
         {
             new object[] {
-                new List<AlbumDto> { albumDto_1, },
+                new List<AlbumDto> { albumDto_1_2Photos, },
                 new List<AlbumExtended> { extended_album1_1Photo }
             },
             new object[] {
-                new List<AlbumDto> { albumDto_1, },
-                new List<AlbumExtended> { extended_album1_1Photo, extended_album2_2Photos }
+                new List<AlbumDto> { albumDto_2, albumDto_1_2Photos },
+                new List<AlbumExtended> { extended_album2_2Photos, extended_album1_1Photo }
+            },
+            new object[] {
+                new List<AlbumDto> { albumDto_1_0Photos },
+                new List<AlbumExtended> { extended_album1_noPhotos }
             }
         };
 
@@ -56,11 +61,7 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
             new object[] {
                 new List<AlbumDto> { },
                 new List<AlbumExtended> { }
-            },
-            new object[] {
-                new List<AlbumDto> {  },
-                new List<AlbumExtended> { extended_album2_2Photos }
-            },
+            }
         };
 
         [Fact(DisplayName = "Handle Throws ArgumentNullException if no query is passed")]
@@ -81,7 +82,7 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
             var albumServiceMock = new Mock<IAlbumService>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = config.CreateMapper();
-            albumServiceMock.Setup(m => m.GetAllAsync()).ReturnsAsync(() => albumExtendeds);
+            albumServiceMock.Setup(m => m.GetByUserAsync(10)).ReturnsAsync(() => albumExtendeds);
 
             var handler = new GetAlbumsByIdQueryHandler(mapper, albumServiceMock.Object);
 
@@ -91,12 +92,12 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
 
         [Theory(DisplayName = "Handle Returns empty if Album service does not return objects for that user")]
         [MemberData(nameof(AlbumsPhotosNoUser10ValidTestData))]
-        public async Task Handle_ReturnsNoAlbumsForUser_WhenServiceDoesNotReturnsValidAlbumsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> albumExtendeds)
+        public async Task Handle_ReturnsNoAlbumsForUser_WhenServiceDoesNotReturnsValidAlbumsForUser(List<AlbumDto> expectedAlbumDtos, List<AlbumExtended> receivedAlbumExtended)
         {
             var albumServiceMock = new Mock<IAlbumService>();
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = config.CreateMapper();
-            albumServiceMock.Setup(m => m.GetAllAsync()).ReturnsAsync(() => albumExtendeds);
+            albumServiceMock.Setup(m => m.GetByUserAsync(10)).ReturnsAsync(() => receivedAlbumExtended);
 
             var handler = new GetAlbumsByIdQueryHandler(mapper, albumServiceMock.Object);
 
