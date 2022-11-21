@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Linq;
 
 namespace Infrastructure.Services
 {
@@ -25,7 +26,7 @@ namespace Infrastructure.Services
 
             await Task.WhenAll(albumsTask, photosTask);
 
-            return MapToAlbumExtended(albumsTask.Result, photosTask.Result);
+            return MergePhotosIntoAlbums(albumsTask.Result, photosTask.Result);
         }
 
         public async Task<IEnumerable<AlbumExtended>> GetByUserAsync(int userId)
@@ -38,10 +39,10 @@ namespace Infrastructure.Services
 
             await Task.WhenAll(albumsTask, photosTask);
 
-            return MapToAlbumExtended(albumsTask.Result, photosTask.Result);
+            return MergePhotosIntoAlbums(albumsTask.Result, photosTask.Result);
         }
 
-        private List<AlbumExtended> MapToAlbumExtended(IEnumerable<Album> albums, IEnumerable<Photo> photos)
+        private IEnumerable<AlbumExtended> MergePhotosIntoAlbums(IEnumerable<Album> albums, IEnumerable<Photo> photos)
         {
             List<AlbumExtended> mappedAlbums = new List<AlbumExtended>();
 
