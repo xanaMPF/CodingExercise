@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using CodingExercise.Application.Album.Dto;
-using CodingExercise.Application.Album.Queries.GetAlbums;
 using CodingExercise.Application.Album.Queries.GetAlbumsByUserId;
 using CodingExercise.Application.Common.Interfaces;
 using CodingExercise.Application.Common.Mappings;
@@ -18,15 +17,13 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
     public class GetAlbumsByUserIdHandlerTest
     {
         public static Album album_1 = new Album { Id = 1, Title = "Title1", UserId = 10 };
-        public static Album album_2 = new Album { Id = 2, Title = "Title2", UserId = 20 };
+        public static Album album_2 = new Album { Id = 2, Title = "Title2", UserId = 10 };
         public static Photo photo_100_album_1 = new Photo { AlbumId = 1, Id = 100, Title = "Photo100" };
         public static Photo photo_200_album_2 = new Photo { AlbumId = 2, Id = 200, Title = "Photo200" };
         public static Photo photo_201_album_2 = new Photo { AlbumId = 2, Id = 201, Title = "Photo201" };
 
-        public static AlbumExtended extended_album1_1Photo = new AlbumExtended(album_1, new List<Photo> { photo_100_album_1, photo_200_album_2 });
+        public static AlbumExtended extended_album1_2Photos = new AlbumExtended(album_1, new List<Photo> { photo_100_album_1, photo_200_album_2 });
         public static AlbumExtended extended_album2_2Photos = new AlbumExtended(album_2, new List<Photo> { photo_200_album_2, photo_201_album_2 });
-        public static AlbumExtended extended_album2_1Photos = new AlbumExtended(album_2, new List<Photo> { photo_200_album_2 });
-
         public static AlbumExtended extended_album1_noPhotos = new AlbumExtended(album_1, new List<Photo> { });
 
         public static PhotoDto photo100Dto = new PhotoDto { Id = 100, Title = "Photo100" };
@@ -36,7 +33,7 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
         public static AlbumDto albumDto_1_2Photos = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> { photo100Dto, photo200Dto } };
         public static AlbumDto albumDto_1_0Photos = new AlbumDto() { Id = 1, Title = "Title1", UserId = 10, Photos = new List<PhotoDto> {} };
 
-        public static AlbumDto albumDto_2 = new AlbumDto() { Id = 2, Title = "Title2", UserId = 20, Photos = new List<PhotoDto> { photo200Dto, photo201Dto } };
+        public static AlbumDto albumDto_2 = new AlbumDto() { Id = 2, Title = "Title2", UserId = 10, Photos = new List<PhotoDto> { photo200Dto, photo201Dto } };
 
         public static GetAlbumsByUserIdQuery getAlbumsByUserIdQueryValid = new GetAlbumsByUserIdQuery(10);
 
@@ -44,11 +41,11 @@ namespace CodingExerciseTests.Queries.GetAlbumsByUserId
         {
             new object[] {
                 new List<AlbumDto> { albumDto_1_2Photos, },
-                new List<AlbumExtended> { extended_album1_1Photo }
+                new List<AlbumExtended> { extended_album1_2Photos }
             },
             new object[] {
                 new List<AlbumDto> { albumDto_2, albumDto_1_2Photos },
-                new List<AlbumExtended> { extended_album2_2Photos, extended_album1_1Photo }
+                new List<AlbumExtended> { extended_album2_2Photos, extended_album1_2Photos }
             },
             new object[] {
                 new List<AlbumDto> { albumDto_1_0Photos },
