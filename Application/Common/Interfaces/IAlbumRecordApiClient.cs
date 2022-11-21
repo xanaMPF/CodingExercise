@@ -7,6 +7,10 @@ namespace CodingExercise.Application.Common.Interfaces
     {
         Task<IEnumerable<Domain.Entities.Album>> GetAlbums();
 
+        Task<IEnumerable<Domain.Entities.Album>> GetAlbumsByUserId(int userId);
+
         Task<IEnumerable<Domain.Entities.Photo>> GetPhotos();
+
+        
     }
 }

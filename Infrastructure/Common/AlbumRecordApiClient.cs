@@ -32,6 +32,19 @@ namespace Infrastructure.Common
             }
         }
 
+        public async Task<IEnumerable<Album>> GetAlbumsByUserId(int userId)
+        {
+            try
+            {
+                return await _albumsClient.GetAlbumsByUserId(userId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Unable to get Albums from source for the user id {userId}", e);
+                throw new AlbumRecordsException();
+            }
+        }
+
         public async Task<IEnumerable<Photo>> GetPhotos()
         {
             try

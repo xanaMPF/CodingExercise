@@ -9,31 +9,50 @@ namespace Infrastructure.Services
 {
     public class AlbumService : IAlbumService
     {
-        private readonly IAlbumRecordApiClient _placeholderClient;
-        public AlbumService(IAlbumRecordApiClient placeholderClient)
+        private readonly IAlbumRecordApiClient _albumRecordClient;
+        public AlbumService(IAlbumRecordApiClient albumRecordClient)
         {
-            _placeholderClient = placeholderClient ?? throw new ArgumentNullException(nameof(placeholderClient));
+            _albumRecordClient = albumRecordClient ?? throw new ArgumentNullException(nameof(albumRecordClient));
         }
 
         public async Task<IEnumerable<AlbumExtended>> GetAllAsync()
         {
-            List<AlbumExtended> albums = new List<AlbumExtended>();
             Task<IEnumerable<Album>> albumsTask;
             Task<IEnumerable<Photo>> photosTask;
 
-            albumsTask = _placeholderClient.GetAlbums();
-            photosTask = _placeholderClient.GetPhotos();
+            albumsTask = _albumRecordClient.GetAlbums();
+            photosTask = _albumRecordClient.GetPhotos();
 
             await Task.WhenAll(albumsTask, photosTask);
 
-            foreach (var album in albumsTask.Result)
+            return MapToAlbumExtended(albumsTask.Result, photosTask.Result);
+        }
+
+        public async Task<IEnumerable<AlbumExtended>> GetByUserAsync(int userId)
+        {
+            Task<IEnumerable<Album>> albumsTask;
+            Task<IEnumerable<Photo>> photosTask;
+
+            albumsTask = _albumRecordClient.GetAlbumsByUserId(userId);
+            photosTask = _albumRecordClient.GetPhotos();
+
+            await Task.WhenAll(albumsTask, photosTask);
+
+            return MapToAlbumExtended(albumsTask.Result, photosTask.Result);
+        }
+
+        private List<AlbumExtended> MapToAlbumExtended(IEnumerable<Album> albums, IEnumerable<Photo> photos)
+        {
+            List<AlbumExtended> mappedAlbums = new List<AlbumExtended>();
+
+            foreach (var album in albums)
             {
-                var photosOfAlbum = photosTask.Result?.Where(photo => photo.AlbumId == album.Id);
+                var photosOfAlbum = photos?.Where(photo => photo.AlbumId == album.Id);
                 var extendedAlbum = new AlbumExtended(album, photosOfAlbum);
-                albums.Add(extendedAlbum);
+                mappedAlbums.Add(extendedAlbum);
             }
 
-            return albums;
+            return mappedAlbums;
         }
     }
 }
